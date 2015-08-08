@@ -9,7 +9,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "edu.stanford.braincat.rulepedia"
+        applicationId "edu.stanford.thingengine.sabrina"
         minSdkVersion 19
         targetSdkVersion 21
         versionCode 1

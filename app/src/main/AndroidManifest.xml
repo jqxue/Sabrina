@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.stanford.braincat.rulepedia" >
+    package="edu.stanford.thingengine.sabrina" >
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
@@ -33,23 +33,12 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="vast-hamlet-6003.herokuapp.com"
+                    android:host="thingpedia.stanford.edu"
                     android:pathPrefix="/rule/"
                     android:scheme="https" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="rulepedia.stanford.edu"
-                    android:pathPrefix="/rule/"
-                    android:scheme="https" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="edu.stanford.braincat.rulepedia.INSTALL_RULE" />
+                <action android:name="edu.stanford.thingengine.sabrina.INSTALL_RULE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -61,18 +50,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="rulepedia.stanford.edu"
-                    android:pathPrefix="/webhook/hook/"
-                    android:scheme="https" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="vast-hamlet-6003.herokuapp.com"
+                    android:host="thingpedia.stanford.edu"
                     android:pathPrefix="/webhook/hook/"
                     android:scheme="https" />
             </intent-filter>
