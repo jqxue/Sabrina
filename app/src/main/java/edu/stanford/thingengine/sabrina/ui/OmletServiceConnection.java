@@ -109,17 +109,17 @@ public class OmletServiceConnection implements ServiceConnection {
             return;
 
         try {
-            Uri sabrinaFeed = omletService.createFeed("Sabrina", Uri.parse("https://vast-hamlet-6003.herokuapp.com/images/world3.jpg"), new long[]{});
+            Uri sabrinaFeed = omletService.createFeed("Sabrina", Uri.parse("https://thingpedia.stanford.edu/images/world3.jpg"), new long[]{});
 
             try {
                 JSONObject json = new JSONObject();
 
                 json.put("noun", "invitation");
                 json.put("displayTitle", "Sabrina");
-                json.put("displayThumbnailUrl", "https://vast-hamlet-6003.herokuapp.com/images/world3.jpg");
+                json.put("displayThumbnailUrl", "https://thingpedia.stanford.edu/images/world3.jpg");
                 json.put("displayText", "Click here to install Sabrina!");
                 json.put("json", "true");
-                json.put("callback", "https://vast-hamlet-6003.herokuapp.com/webhook/install");
+                json.put("callback", "https://thingpedia.stanford.edu/webhook/install");
 
                 omletService.sendObj(sabrinaFeed, "rdl", json.toString());
             } catch (JSONException je) {
