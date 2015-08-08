@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.stanford.thingengine.sabrina.omletUI.OmletUIService;
+import edu.stanford.thingengine.sabrina.service.AutoStarter;
 import mobisocial.osm.IOsmService;
 
 /**
@@ -45,10 +46,12 @@ public class OmletServiceConnection implements ServiceConnection {
         String sabrinaFeed = prefs.getString("feedUri", null);
         needsInstall = sabrinaFeed == null;
 
-        if (needsInstall)
+        if (needsInstall) {
             startOmletWebApp();
-        else
+        } else {
             Log.i(MainActivity.LOG_TAG, "Sabrina feed is already created with URI " + sabrinaFeed);
+            AutoStarter.startOmletService(parentContext);
+        }
 
         if (prefs.getString("webhook", null) != null)
             Log.i(MainActivity.LOG_TAG, "Sabrina webhook is already configured at " + prefs.getString("webhook", null));
@@ -57,12 +60,12 @@ public class OmletServiceConnection implements ServiceConnection {
         try (Cursor cursor = resolver.query(Uri.parse("content://mobisocial.osm/identities"), new String[] { "id", "principal", "name", "hasApp" },
                 "owned = 1 and hasApp = 1 and principal like 'omlet:%'", null, null)) {
             if (cursor == null) {
-                Log.e("thingengine.sabrina.Games", "Can't get cursor to identities list");
+                Log.e("sabrina.Omlet", "Can't get cursor to identities list");
                 return;
             }
 
             if (!cursor.moveToFirst()) {
-                Log.e("thingengine.sabrina.Games", "Can't find Omlet owner in identities list");
+                Log.e("sabrina.Omlet", "Can't find Omlet owner in identities list");
                 return;
             }
 

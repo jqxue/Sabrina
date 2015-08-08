@@ -18,7 +18,7 @@ public class OmletMessage {
     private final long objectId;
     private final String objectType;
     private final long feedId;
-    private String cachedJson;
+    private Long cachedSenderId;
     private String cachedText;
     private String cachedImageUrl;
 
@@ -38,6 +38,49 @@ public class OmletMessage {
 
     public Contact getSender() throws UnknownObjectException {
         return ContactPool.get().getObject(getFeedUri());
+    }
+
+    public boolean cacheAll(Context ctx) {
+        try {
+            try (Cursor queryCursor = ctx.getContentResolver().query(Uri.parse(OmletChannel.CONTENT_URI),
+                    new String[]{"senderId", "text", "fullsizeHash"},
+                    "Id = ?",
+                    new String[]{String.valueOf(objectId)}, null)) {
+                if (!queryCursor.moveToFirst())
+                    return false;
+
+                cachedSenderId = queryCursor.getLong(0);
+                cachedText = queryCursor.getString(1);
+                byte[] blob = queryCursor.getBlob(2);
+                if (blob != null)
+                    cachedImageUrl = "content://mobisocial.osm/blobs/" + Util.bytesToHexString(blob).toLowerCase();
+                else
+                    cachedImageUrl = null;
+            }
+
+            return true;
+        } catch(RuntimeException e) {
+            return false;
+        }
+    }
+
+    public Long getSenderId(Context ctx) {
+        if (cachedSenderId != null)
+            return cachedSenderId;
+
+        if (ctx == null)
+            return null;
+
+        try (Cursor queryCursor = ctx.getContentResolver().query(Uri.parse(OmletChannel.CONTENT_URI),
+                new String[]{"senderId"},
+                "Id = ?",
+                new String[]{String.valueOf(objectId)}, null)) {
+            if (!queryCursor.moveToFirst())
+                return null;
+
+            cachedSenderId = queryCursor.getLong(0);
+            return cachedSenderId;
+        }
     }
 
     @Nullable
